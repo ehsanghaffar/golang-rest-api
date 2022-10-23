@@ -16,7 +16,7 @@ var setupServer = func(appPort string) {
 
 	router.HandleFunc("/", routes.HomePage)
 
-	router.HandleFunc("/api/whois/{domainName}", routes.DomainDetails).Methods("GET")
+	router.HandleFunc("/api/whois/{domainName}", routes.Whois).Methods("GET")
 
 	err := http.ListenAndServe(":"+appPort, router)
 	if err != nil {

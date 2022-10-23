@@ -2,13 +2,12 @@ package routes
 
 import (
 	"fmt"
-	"io/ioutil"
+	"go-api/src/util"
 	"log"
 	"net/http"
-	"os"
 
 	"github.com/gorilla/mux"
-	"github.com/joho/godotenv"
+	"github.com/likexian/whois"
 )
 
 func HomePage(w http.ResponseWriter, r *http.Request) {
@@ -16,27 +15,16 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 	log.Println("Api is up...")
 }
 
-func DomainDetails(w http.ResponseWriter, r *http.Request) {
-	// get domain name from client
+func Whois(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	domainName := vars["domainName"]
 
-	// initial environment and get variables
-	err := godotenv.Load(".env")
-	if err != nil {
-		log.Fatalf("Error loading .env file")
+	result, err := whois.Whois(domainName)
+
+	util.WhoisParser(w, result)
+
+	if err == nil {
+		log.Println("Get Whois:", domainName)
+		// fmt.Fprintf(w, result)
 	}
-	url := os.Getenv("whoisApi")
-	token := os.Getenv("token")
-
-	// get domain whois from external API
-	req, _ := http.NewRequest("GET", url+domainName, nil)
-	req.Header.Add("Authorization", "Bearer "+token)
-	res, _ := http.DefaultClient.Do(req)
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	// return response
-	log.Println("Get whois for:", domainName)
-	fmt.Fprintf(w, string(body))
 }

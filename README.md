@@ -2,53 +2,28 @@
 
 A rest API writen with Golang programming language.
 
-## EndPoints
+## Getting Start
 
-- [http://localhost:3000](http://localhost:3000)
+At this time, you have a RESTful API server running at http://127.0.0.1:3000. It provides the following endpoints:
 
-return:
+* ```GET /api/whois/{domainName}``` returns the detailed information of a domain
 
-```bash
-Welcome to The EndPointio!
-```
-
-- [http://localhost:3000/api/whois/google.com](http://localhost:3000/api/whois/google.com)
-
-return:
+### How To Use
 
 ```bash
-{
-  "domain": {
-    "id": "2138514_DOMAIN_COM-VRSN",
-    "domain": "google.com",
-    "punycode": "google.com",
-    "name": "google",
-    "extension": "com",
-    "whois_server": "whois.markmonitor.com",
-    "status": [
-      "clientdeleteprohibited",
-      "clienttransferprohibited",
-      "clientupdateprohibited",
-      "serverdeleteprohibited",
-      "servertransferprohibited",
-      "serverupdateprohibited"
-    ],
-    "name_servers": [
-      "ns1.google.com",
-      "ns2.google.com",
-      "ns3.google.com",
-      "ns4.google.com"
-    ],
-    "created_date": "1997-09-15T04:00:00Z",
-    "updated_date": "2019-09-09T15:39:04Z",
-    "expiration_date": "2028-09-14T04:00:00Z"
-  },
-  "registrar": {
-    "id": "292",
-    "name": "MarkMonitor Inc.",
-    "phone": "+1.2086851750",
-    "email": "abusecomplaints@markmonitor.com",
-    "referral_url": "http://www.markmonitor.com"
-  }
-}
+git clone https://github.com/ehsanghaffar/golang-rest-api.git
+cd golang-rest-api
+
+go run ./main.go
 ```
+
+#### Tools
+
+* Routing [Mux](https://github.com/gorilla/mux)
+* Whois query [Whois](github.com/likexian/whois)
+* Whois information parser [WhoisParser](github.com/likexian/whois-parser)
+
+#### TODO
+
+- [ ] API Documentation - Lot of potential to improve.
+- [ ] Add error handling.
