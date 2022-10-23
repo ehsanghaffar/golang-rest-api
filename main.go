@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"go-api/src/routes"
 	"log"
 	"net/http"
 	"os"
@@ -10,14 +11,12 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func homePage(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Welcome to The EndPointio!")
-}
-
 var setupServer = func(appPort string) {
 	router := mux.NewRouter()
 
-	router.HandleFunc("/", homePage)
+	router.HandleFunc("/", routes.HomePage)
+
+	router.HandleFunc("/api/whois/{domainName}", routes.DomainDetails).Methods("GET")
 
 	err := http.ListenAndServe(":"+appPort, router)
 	if err != nil {
@@ -33,7 +32,6 @@ func main() {
 	}
 
 	appPort := os.Getenv("appPort")
-
 	if appPort == "" {
 		appPort = "3100"
 	}
