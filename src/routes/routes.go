@@ -2,7 +2,6 @@ package routes
 
 import (
 	"fmt"
-	"go-api/src/util"
 	"log"
 	"net/http"
 
@@ -17,14 +16,15 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 
 func Whois(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
+
 	domainName := vars["domainName"]
 
 	result, err := whois.Whois(domainName)
 
-	util.WhoisParser(w, result)
+	// parsedInfo := util.WhoisParser(w, result)
 
 	if err == nil {
 		log.Println("Get Whois:", domainName)
-		// fmt.Fprintf(w, result)
+		fmt.Fprintln(w, result)
 	}
 }

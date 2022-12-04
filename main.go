@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"go-api/src/routes"
 	"log"
 	"net/http"
@@ -14,13 +13,13 @@ import (
 var setupServer = func(appPort string) {
 	router := mux.NewRouter()
 
-	router.HandleFunc("/", routes.HomePage)
+	router.HandleFunc("/", routes.HomePage).Methods("GET")
 
 	router.HandleFunc("/api/whois/{domainName}", routes.Whois).Methods("GET")
 
 	err := http.ListenAndServe(":"+appPort, router)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 	}
 }
 
